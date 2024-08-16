@@ -152,6 +152,18 @@
         return [a, b, c].map((v) => Math.max(0, Math.min(1, v)));
       }
 
+      function calculateHeightB(x, y) {
+        const intersectBx = 1 - (TRIANGLE_HEIGHT - y) / Math.sqrt(3);
+        const intersectBy = TRIANGLE_HEIGHT;
+        return {
+          intersectBx,
+          intersectBy,
+          length: Math.sqrt(
+            Math.pow(x - intersectBx, 2) + Math.pow(y - intersectBy, 2)
+          ),
+        };
+      }
+
       function updateHeightLines(x, y) {
         console.log('Updating height lines:', x, y);
 
@@ -181,18 +193,15 @@
         leftHeightLabel.textContent = TRIANGLE_HEIGHT.toFixed(3);
 
         // Height to side B (right side)
-        const intersectBx =
-          (y - TRIANGLE_HEIGHT + Math.sqrt(3) * x) / Math.sqrt(3);
-        const intersectBy = TRIANGLE_HEIGHT - Math.sqrt(3) * (intersectBx - 1);
+        const {
+          intersectBx,
+          intersectBy,
+          length: heightBLength,
+        } = calculateHeightB(x, y);
         heightB.setAttribute('x1', x);
         heightB.setAttribute('y1', y);
         heightB.setAttribute('x2', intersectBx);
         heightB.setAttribute('y2', intersectBy);
-
-        // Calculate the length of height B
-        const heightBLength = Math.sqrt(
-          Math.pow(x - intersectBx, 2) + Math.pow(y - intersectBy, 2)
-        );
 
         // Update height B label
         heightBLabel.setAttribute('x', (x + intersectBx) / 2 + 0.01);
