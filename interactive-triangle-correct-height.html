@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Equilateral Triangle with Correct Height Line</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+      .triangle-container {
+        width: 300px;
+        height: 260px;
+        position: relative;
+        cursor: crosshair;
+      }
+      .triangle {
+        width: 100%;
+        height: 100%;
+      }
+      #dot {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: red;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+      #coordinates {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: white;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="triangle-container" id="triangle-container">
+      <svg class="triangle" viewBox="0 0 1 0.866" id="triangle-svg">
+        <polygon
+          points="0,0.866 0.5,0 1,0.866"
+          fill="#e0e0e0"
+          stroke="#333"
+          stroke-width="0.005"
+        />
+        <text x="0.5" y="0.05" font-size="0.05" text-anchor="middle">1,0</text>
+        <text x="0.05" y="0.85" font-size="0.05" text-anchor="start">0,0</text>
+        <text x="0.95" y="0.85" font-size="0.05" text-anchor="end">0,1</text>
+        <line
+          id="height-line"
+          x1="0"
+          y1="0"
+          x2="0"
+          y2="0"
+          stroke="blue"
+          stroke-width="0.002"
+          stroke-dasharray="0.01"
+        />
+      </svg>
+      <div id="dot"></div>
+    </div>
+    <div id="coordinates">0.33, 0.33, 0.33</div>
+
+    <script>
+      const container = document.getElementById('triangle-container');
+      const dot = document.getElementById('dot');
+      const coordinatesDisplay = document.getElementById('coordinates');
+      const heightLine = document.getElementById('height-line');
+
+      function constrainToTriangle(x, y) {
+        if (y > Math.sqrt(3) * (0.5 - Math.abs(x - 0.5))) {
+          y = Math.sqrt(3) * (0.5 - Math.abs(x - 0.5));
+        }
+        if (x < 0) x = 0;
+        if (x > 1) x = 1;
+        if (y < 0) y = 0;
+        return [x, y];
+      }
+
+      function getBarycentricCoordinates(x, y) {
+        const a = 1 - x - y / Math.sqrt(3);
+        const b = x - y / Math.sqrt(3);
+        const c = (2 * y) / Math.sqrt(3);
+        return [a, b, c].map((v) => Math.max(0, Math.min(1, v)));
+      }
+
+      function updateHeightLine(x, y) {
+        heightLine.setAttribute('x1', x);
+        heightLine.setAttribute('y1', 1 - y);
+        heightLine.setAttribute('x2', x);
+        heightLine.setAttribute('y2', 0.866);
+      }
+
+      function updateDotAndCoordinates(x, y) {
+        [x, y] = constrainToTriangle(x, y);
+
+        const svgRect = document
+          .getElementById('triangle-svg')
+          .getBoundingClientRect();
+        dot.style.left = `${x * svgRect.width}px`;
+        dot.style.top = `${(1 - y) * svgRect.height}px`;
+
+        updateHeightLine(x, y);
+
+        const [a, b, c] = getBarycentricCoordinates(x, y);
+        coordinatesDisplay.textContent = `${a.toFixed(2)}, ${b.toFixed(
+          2
+        )}, ${c.toFixed(2)}`;
+      }
+
+      container.addEventListener('mousemove', (e) => {
+        const rect = container.getBoundingClientRect();
+        let x = (e.clientX - rect.left) / rect.width;
+        let y = 1 - (e.clientY - rect.top) / rect.height;
+
+        updateDotAndCoordinates(x, y);
+      });
+
+      // Initialize dot at the center of the triangle
+      updateDotAndCoordinates(0.5, 0.433);
+    </script>
+  </body>
+</html>
