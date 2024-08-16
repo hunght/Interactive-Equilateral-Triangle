@@ -15,7 +15,6 @@ function constrainToTriangle(x, y) {
 }
 
 function calculateHeightB(x, y) {
-  console.log('calculateHeightB', x, y);
   // Constants
   const ANGLE_RAD = Math.PI / 6; // 30 degrees in radians
   const opposite = y;
@@ -26,12 +25,18 @@ function calculateHeightB(x, y) {
   const intersectBx = 1 - Math.cos(Math.PI / 3) * oppositeBigTriangle;
   const intersectBy =
     TRIANGLE_HEIGHT - Math.sin(Math.PI / 3) * oppositeBigTriangle;
-  const length = Math.sqrt((intersectBx - x) ** 2 + (intersectBy - y) ** 2);
+  const length = Math.sqrt(
+    (intersectBx - x) ** 2 +
+      (Math.sin(Math.PI / 3) * oppositeBigTriangle - y) ** 2
+  );
+
+  // Round values for debugging
+  const roundToFourDecimals = (num) => Math.round(num * 10000) / 10000;
 
   return {
-    intersectBx,
-    intersectBy,
-    length,
+    intersectBx: roundToFourDecimals(intersectBx),
+    intersectBy: roundToFourDecimals(intersectBy),
+    length: roundToFourDecimals(length),
   };
 }
 
