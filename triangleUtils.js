@@ -2,13 +2,15 @@
 const TRIANGLE_HEIGHT = 0.866;
 
 function constrainToTriangle(x, y) {
-  if (y > Math.sqrt(3) * (0.5 - Math.abs(x - 0.5))) {
-    y = Math.sqrt(3) * (0.5 - Math.abs(x - 0.5));
-  }
-  if (x < 0) x = 0;
-  if (x > 1) x = 1;
-  if (y < 0) y = 0;
-  if (y > TRIANGLE_HEIGHT) y = TRIANGLE_HEIGHT;
+  // Constrain x to [0, 1]
+  x = Math.max(0, Math.min(1, x));
+
+  // Calculate the maximum allowed y for the given x
+  const maxY = TRIANGLE_HEIGHT * (1 - Math.abs(2 * x - 1));
+
+  // Constrain y to [0, maxY]
+  y = Math.max(0, Math.min(maxY, y));
+
   return [x, y];
 }
 

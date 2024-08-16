@@ -16,7 +16,15 @@ describe('Triangle Utilities', () => {
     });
 
     test('point outside triangle', () => {
-      expect(constrainToTriangle(1.5, 1.5)).toEqual([1, TRIANGLE_HEIGHT]);
+      expect(constrainToTriangle(1.5, 1.5)).toEqual([1, 0]);
+    });
+
+    test('point at top vertex', () => {
+      expect(constrainToTriangle(0.5, 1)).toEqual([0.5, TRIANGLE_HEIGHT]);
+    });
+
+    test('point on left edge', () => {
+      expect(constrainToTriangle(-0.5, 0.5)).toEqual([0, 0]);
     });
   });
 
