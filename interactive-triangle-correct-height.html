@@ -116,8 +116,14 @@
           containerRect.height
         );
 
+        // Calculate the actual triangle height within the container
+        const triangleHeight = (containerRect.width * Math.sqrt(3)) / 2;
+
+        // Adjust y-coordinate to match the triangle's height
+        const adjustedY = y * (triangleHeight / containerRect.height);
+
         const dotX = x * containerRect.width;
-        const dotY = (1 - y) * containerRect.height;
+        const dotY = (1 - adjustedY) * containerRect.height;
         console.log('Dot position:', dotX, dotY);
 
         dot.style.left = `${dotX}px`;
@@ -139,8 +145,9 @@
         updateDotAndCoordinates(x, y);
       });
 
-      // Initialize dot at the center of the triangle
-      updateDotAndCoordinates(0.5, 0.433);
+      // Test case
+      console.log('Test case: (0.5, 1)');
+      updateDotAndCoordinates(0.5, 1);
     </script>
   </body>
 </html>
