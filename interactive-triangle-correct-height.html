@@ -67,6 +67,14 @@
           stroke-width="0.002"
           stroke-dasharray="0.01"
         />
+        <text
+          id="height-label"
+          x="0"
+          y="0"
+          font-size="0.04"
+          text-anchor="start"
+          fill="blue"
+        ></text>
       </svg>
       <div id="dot"></div>
     </div>
@@ -77,6 +85,7 @@
       const dot = document.getElementById('dot');
       const coordinatesDisplay = document.getElementById('coordinates');
       const heightLine = document.getElementById('height-line');
+      const heightLabel = document.getElementById('height-label');
 
       // Define the constant for triangle height
       const TRIANGLE_HEIGHT = 0.866;
@@ -106,6 +115,16 @@
         heightLine.setAttribute('y1', TRIANGLE_HEIGHT - y);
         heightLine.setAttribute('x2', x);
         heightLine.setAttribute('y2', TRIANGLE_HEIGHT);
+
+        // Calculate the height of the line
+        const height = y;
+
+        // Update the height label position and text
+        heightLabel.setAttribute('x', x + 0.01); // Slight offset for readability
+        heightLabel.setAttribute('y', TRIANGLE_HEIGHT - 0.02); // Slight offset from bottom
+        heightLabel.textContent = x.toFixed(2);
+
+        console.log(`Height line: ${height.toFixed(3)}, x: ${x.toFixed(2)}`);
       }
 
       function updateDotAndCoordinates(x, y) {
