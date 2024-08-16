@@ -58,23 +58,43 @@
         <text x="0.05" y="0.85" font-size="0.05" text-anchor="start">0,0</text>
         <text x="0.95" y="0.85" font-size="0.05" text-anchor="end">0,1</text>
         <line
-          id="height-line"
+          id="bottom-height-line"
           x1="0"
           y1="0"
           x2="0"
           y2="0"
           stroke="blue"
-          stroke-width="0.002"
+          stroke-width="0.005"
+          stroke-dasharray="0.01"
+        />
+        <line
+          id="left-height-line"
+          x1="0"
+          y1="0"
+          x2="0"
+          y2="0.866"
+          stroke="green"
+          stroke-width="0.005"
           stroke-dasharray="0.01"
         />
         <text
-          id="height-label"
+          id="bottom-height-label"
           x="0"
           y="0"
           font-size="0.04"
           text-anchor="start"
           fill="blue"
         ></text>
+        <text
+          id="left-height-label"
+          x="0.02"
+          y="0.433"
+          font-size="0.04"
+          text-anchor="start"
+          fill="green"
+        >
+          0.866
+        </text>
       </svg>
       <div id="dot"></div>
     </div>
@@ -84,8 +104,10 @@
       const container = document.getElementById('triangle-container');
       const dot = document.getElementById('dot');
       const coordinatesDisplay = document.getElementById('coordinates');
-      const heightLine = document.getElementById('height-line');
-      const heightLabel = document.getElementById('height-label');
+      const bottomHeightLine = document.getElementById('bottom-height-line');
+      const bottomHeightLabel = document.getElementById('bottom-height-label');
+      const leftHeightLine = document.getElementById('left-height-line');
+      const leftHeightLabel = document.getElementById('left-height-label');
 
       // Define the constant for triangle height
       const TRIANGLE_HEIGHT = 0.866;
@@ -110,21 +132,38 @@
         return [a, b, c].map((v) => Math.max(0, Math.min(1, v)));
       }
 
-      function updateHeightLine(x, y) {
-        heightLine.setAttribute('x1', x);
-        heightLine.setAttribute('y1', TRIANGLE_HEIGHT - y);
-        heightLine.setAttribute('x2', x);
-        heightLine.setAttribute('y2', TRIANGLE_HEIGHT);
+      function updateHeightLines(x, y) {
+        console.log('Updating height lines:', x, y);
 
-        // Calculate the height of the line
-        const height = y;
+        // Update bottom height line
+        bottomHeightLine.setAttribute('x1', x);
+        bottomHeightLine.setAttribute('y1', TRIANGLE_HEIGHT - y);
+        bottomHeightLine.setAttribute('x2', x);
+        bottomHeightLine.setAttribute('y2', TRIANGLE_HEIGHT);
 
-        // Update the height label position and text
-        heightLabel.setAttribute('x', x + 0.01); // Slight offset for readability
-        heightLabel.setAttribute('y', TRIANGLE_HEIGHT - 0.02); // Slight offset from bottom
-        heightLabel.textContent = x.toFixed(2);
+        // Calculate the height of the bottom line
+        const bottomHeight = y;
 
-        console.log(`Height line: ${height.toFixed(3)}, x: ${x.toFixed(2)}`);
+        // Update the bottom height label position and text
+        bottomHeightLabel.setAttribute('x', x + 0.01);
+        bottomHeightLabel.setAttribute('y', TRIANGLE_HEIGHT - 0.02);
+        bottomHeightLabel.textContent = bottomHeight.toFixed(2);
+
+        // Update left height line
+        leftHeightLine.setAttribute('x1', 0);
+        leftHeightLine.setAttribute('y1', 0);
+        leftHeightLine.setAttribute('x2', 0);
+        leftHeightLine.setAttribute('y2', TRIANGLE_HEIGHT);
+
+        // Update left height label
+        leftHeightLabel.setAttribute('x', 0.02);
+        leftHeightLabel.setAttribute('y', TRIANGLE_HEIGHT / 2);
+        leftHeightLabel.textContent = TRIANGLE_HEIGHT.toFixed(3);
+
+        console.log('Bottom height line:', bottomHeightLine.outerHTML);
+        console.log('Left height line:', leftHeightLine.outerHTML);
+        console.log('Bottom height label:', bottomHeightLabel.outerHTML);
+        console.log('Left height label:', leftHeightLabel.outerHTML);
       }
 
       function updateDotAndCoordinates(x, y) {
@@ -151,7 +190,7 @@
 
         dot.style.left = `${dotX}px`;
         dot.style.top = `${dotY}px`;
-        updateHeightLine(x, y);
+        updateHeightLines(x, y);
 
         const [a, b, c] = getBarycentricCoordinates(x, y);
         coordinatesDisplay.textContent = `${a.toFixed(2)}, ${b.toFixed(
