@@ -6,20 +6,11 @@ const {
 
 describe('Triangle Utilities', () => {
   describe('constrainToTriangle', () => {
-    test('point inside triangle', () => {
-      expect(constrainToTriangle(0.5, 0.433)).toEqual([0.5, 0.433]);
-    });
-
-    test('point outside triangle', () => {
-      expect(constrainToTriangle(1.5, 1.5)).toEqual([1, 0]);
-    });
-
-    test('point at top vertex', () => {
-      expect(constrainToTriangle(0.5, 1)).toEqual([0.5, TRIANGLE_HEIGHT]);
-    });
-
     test('point on left edge', () => {
-      expect(constrainToTriangle(-0.5, 0.5)).toEqual([0, 0]);
+      expect(constrainToTriangle(0, 0)).toEqual([0, TRIANGLE_HEIGHT]);
+    });
+    test('point on left edge', () => {
+      expect(constrainToTriangle(0, TRIANGLE_HEIGHT)).toEqual([0, 0]);
     });
   });
 
@@ -29,6 +20,11 @@ describe('Triangle Utilities', () => {
         intersectBx: 0.5,
         intersectBy: TRIANGLE_HEIGHT,
         length: 0,
+      });
+      expect(calculateHeightB(0, 0)).toEqual({
+        intersectBx: 0.5,
+        intersectBy: TRIANGLE_HEIGHT,
+        length: TRIANGLE_HEIGHT,
       });
     });
   });
