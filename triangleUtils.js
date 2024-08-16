@@ -15,26 +15,17 @@ function constrainToTriangle(x, y) {
 }
 
 function calculateHeightB(x, y) {
-  if (y === 0) {
-    // Top of the triangle in SVG coordinates
-    return {
-      intersectBx: x,
-      intersectBy: 0,
-      length: 0,
-    };
-  }
-
   // Constants
   const ANGLE_RAD = Math.PI / 6; // 30 degrees in radians
 
   // Calculate the differences using trigonometric relations
   // Note: We negate dy for SVG coordinates
   const dx = Math.cos(ANGLE_RAD);
-  const dy = -Math.sin(ANGLE_RAD); // Negated for SVG
+  const dy = TRIANGLE_HEIGHT * (1 - Math.sin(ANGLE_RAD)); // Negated for SVG
 
   // Calculate intersection points
   const intersectBx = x + dx;
-  const intersectBy = y + dy;
+  const intersectBy = TRIANGLE_HEIGHT - (y + dy);
 
   // Calculate length
   const length = Math.sqrt(dx * dx + dy * dy);
