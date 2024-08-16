@@ -17,3 +17,4 @@ This project creates an interactive equilateral triangle visualization using HTM
 
 - `interactive-triangle-correct-height.html`: Main HTML file containing the triangle visualization and interaction logic.
 - `triangleUtils.js`: JavaScript utility functions for triangle calculations (not included in the provided code snippet).
+![Screenshot 2024-08-16 at 20 53 57](https://github.com/user-attachments/assets/028e2b10-18f3-4d1e-b368-df2c38a1780a)
