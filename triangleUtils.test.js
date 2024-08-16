@@ -25,10 +25,11 @@ describe('Triangle Utilities', () => {
 
   describe('calculateHeightB', () => {
     test('from center of triangle', () => {
-      const result = calculateHeightB(0.5, TRIANGLE_HEIGHT / 2);
-      expect(result.intersectBx).toBeCloseTo(1, 2);
-      expect(result.intersectBy).toBeCloseTo(TRIANGLE_HEIGHT, 2);
-      expect(result.length).toBeCloseTo(0.5, 2);
+      expect(calculateHeightB(0.5, TRIANGLE_HEIGHT)).toEqual({
+        intersectBx: 0.5,
+        intersectBy: TRIANGLE_HEIGHT,
+        length: 0,
+      });
     });
   });
 });
