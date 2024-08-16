@@ -67,16 +67,6 @@
           stroke-width="0.005"
           stroke-dasharray="0.01"
         />
-        <line
-          id="left-height-line"
-          x1="0"
-          y1="0"
-          x2="0"
-          y2="0.866"
-          stroke="green"
-          stroke-width="0.005"
-          stroke-dasharray="0.01"
-        />
         <text
           id="bottom-height-label"
           x="0"
@@ -85,16 +75,6 @@
           text-anchor="start"
           fill="blue"
         ></text>
-        <text
-          id="left-height-label"
-          x="0.02"
-          y="0.433"
-          font-size="0.04"
-          text-anchor="start"
-          fill="green"
-        >
-          0.866
-        </text>
         <line
           id="height-b"
           x1="0"
@@ -125,8 +105,6 @@
       const coordinatesDisplay = document.getElementById('coordinates');
       const bottomHeightLine = document.getElementById('bottom-height-line');
       const bottomHeightLabel = document.getElementById('bottom-height-label');
-      const leftHeightLine = document.getElementById('left-height-line');
-      const leftHeightLabel = document.getElementById('left-height-label');
       const heightB = document.getElementById('height-b');
       const heightBLabel = document.getElementById('height-b-label');
 
@@ -147,17 +125,6 @@
         bottomHeightLabel.setAttribute('y', TRIANGLE_HEIGHT - 0.02);
         bottomHeightLabel.textContent = bottomHeight.toFixed(2);
 
-        // Update left height line
-        leftHeightLine.setAttribute('x1', 0);
-        leftHeightLine.setAttribute('y1', 0);
-        leftHeightLine.setAttribute('x2', 0);
-        leftHeightLine.setAttribute('y2', TRIANGLE_HEIGHT);
-
-        // Update left height label
-        leftHeightLabel.setAttribute('x', 0.02);
-        leftHeightLabel.setAttribute('y', TRIANGLE_HEIGHT / 2);
-        leftHeightLabel.textContent = TRIANGLE_HEIGHT.toFixed(3);
-
         // Height to side B (right side)
         const {
           intersectBx,
@@ -175,9 +142,7 @@
         heightBLabel.textContent = heightBLength.toFixed(2);
 
         console.log('Bottom height line:', bottomHeightLine.outerHTML);
-        console.log('Left height line:', leftHeightLine.outerHTML);
         console.log('Bottom height label:', bottomHeightLabel.outerHTML);
-        console.log('Left height label:', leftHeightLabel.outerHTML);
         console.log('Height B line:', heightB.outerHTML);
         console.log('Height B label:', heightBLabel.outerHTML);
       }
