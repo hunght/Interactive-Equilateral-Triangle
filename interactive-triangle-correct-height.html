@@ -137,8 +137,8 @@
         heightB.setAttribute('y2', intersectBy);
 
         // Update height B label
-        heightBLabel.setAttribute('x', (x + intersectBx) / 2 + 0.01);
-        heightBLabel.setAttribute('y', (y + intersectBy) / 2);
+        heightBLabel.setAttribute('x', intersectBx + 0.01);
+        heightBLabel.setAttribute('y', intersectBy);
         heightBLabel.textContent = heightBLength.toFixed(2);
 
         console.log('Bottom height line:', bottomHeightLine.outerHTML);
