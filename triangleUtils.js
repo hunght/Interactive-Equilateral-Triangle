@@ -14,13 +14,6 @@ function constrainToTriangle(x, y) {
   return [x, y];
 }
 
-function getBarycentricCoordinates(x, y) {
-  const a = 1 - x - y / Math.sqrt(3);
-  const b = x - y / Math.sqrt(3);
-  const c = (2 * y) / Math.sqrt(3);
-  return [a, b, c].map((v) => Math.max(0, Math.min(1, v)));
-}
-
 function calculateHeightB(x, y) {
   const intersectBx = 1 - (TRIANGLE_HEIGHT - y) / Math.sqrt(3);
   const intersectBy = TRIANGLE_HEIGHT;
@@ -36,6 +29,5 @@ function calculateHeightB(x, y) {
 module.exports = {
   TRIANGLE_HEIGHT,
   constrainToTriangle,
-  getBarycentricCoordinates,
   calculateHeightB,
 };

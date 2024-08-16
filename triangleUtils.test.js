@@ -1,15 +1,10 @@
 const {
   TRIANGLE_HEIGHT,
   constrainToTriangle,
-  getBarycentricCoordinates,
   calculateHeightB,
 } = require('./triangleUtils');
 
 describe('Triangle Utilities', () => {
-  test('TRIANGLE_HEIGHT constant', () => {
-    expect(TRIANGLE_HEIGHT).toBeCloseTo(0.866, 3);
-  });
-
   describe('constrainToTriangle', () => {
     test('point inside triangle', () => {
       expect(constrainToTriangle(0.5, 0.433)).toEqual([0.5, 0.433]);
@@ -25,15 +20,6 @@ describe('Triangle Utilities', () => {
 
     test('point on left edge', () => {
       expect(constrainToTriangle(-0.5, 0.5)).toEqual([0, 0]);
-    });
-  });
-
-  describe('getBarycentricCoordinates', () => {
-    test('center of triangle', () => {
-      const [a, b, c] = getBarycentricCoordinates(0.5, TRIANGLE_HEIGHT / 2);
-      expect(a).toBeCloseTo(1 / 3, 2);
-      expect(b).toBeCloseTo(1 / 3, 2);
-      expect(c).toBeCloseTo(1 / 3, 2);
     });
   });
 

@@ -142,9 +142,8 @@
         heightBLabel.textContent = heightBLength.toFixed(2);
 
         console.log('Bottom height line:', bottomHeightLine.outerHTML);
-        console.log('Bottom height label:', bottomHeightLabel.outerHTML);
+
         console.log('Height B line:', heightB.outerHTML);
-        console.log('Height B label:', heightBLabel.outerHTML);
       }
 
       function updateDotAndCoordinates(x, y) {
@@ -173,10 +172,9 @@
         dot.style.top = `${dotY}px`;
         updateHeightLines(x, y);
 
-        const [a, b, c] = getBarycentricCoordinates(x, y);
-        coordinatesDisplay.textContent = `${a.toFixed(2)}, ${b.toFixed(
+        coordinatesDisplay.textContent = `x: ${x.toFixed(2)}, y: ${y.toFixed(
           2
-        )}, ${c.toFixed(2)}`;
+        )}`;
       }
 
       container.addEventListener('mousemove', (e) => {
