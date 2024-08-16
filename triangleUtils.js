@@ -15,6 +15,7 @@ function constrainToTriangle(x, y) {
 }
 
 function calculateHeightB(x, y) {
+  console.log('calculateHeightB', x, y);
   // Constants
   const ANGLE_RAD = Math.PI / 6; // 30 degrees in radians
   const opposite = y;
@@ -25,8 +26,29 @@ function calculateHeightB(x, y) {
   const intersectBx = 1 - Math.cos(Math.PI / 3) * oppositeBigTriangle;
   const intersectBy =
     TRIANGLE_HEIGHT - Math.sin(Math.PI / 3) * oppositeBigTriangle;
+  const length = Math.sqrt((intersectBx - x) ** 2 + (intersectBy - y) ** 2);
+
+  return {
+    intersectBx,
+    intersectBy,
+    length,
+  };
+}
+
+function calculateHeightA(x, y) {
+  // Constants
+  const ANGLE_RAD = Math.PI / 6; // 30 degrees in radians
+  const opposite = y;
+  const adjacent = opposite / Math.tan(ANGLE_RAD);
+  const hypotenuseBigTriangle = x + adjacent;
+  const oppositeBigTriangle = Math.sin(ANGLE_RAD) * hypotenuseBigTriangle;
+
+  const intersectAx = Math.cos(Math.PI / 3) * oppositeBigTriangle;
+  const intersectAy =
+    TRIANGLE_HEIGHT - Math.sin(Math.PI / 3) * oppositeBigTriangle;
+
   const length = Math.sqrt(
-    (intersectBx - x) ** 2 +
+    (intersectAx - x) ** 2 +
       (Math.sin(Math.PI / 3) * oppositeBigTriangle - y) ** 2
   );
 
@@ -34,8 +56,8 @@ function calculateHeightB(x, y) {
   const roundToFourDecimals = (num) => Math.round(num * 10000) / 10000;
 
   return {
-    intersectBx: roundToFourDecimals(intersectBx),
-    intersectBy: roundToFourDecimals(intersectBy),
+    intersectAx: roundToFourDecimals(intersectAx),
+    intersectAy: roundToFourDecimals(intersectAy),
     length: roundToFourDecimals(length),
   };
 }
@@ -44,4 +66,5 @@ module.exports = {
   TRIANGLE_HEIGHT,
   constrainToTriangle,
   calculateHeightB,
+  calculateHeightA,
 };

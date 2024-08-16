@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Interactive Equilateral Triangle with Correct Height Line</title>
+    <title>Interactive Equilateral Triangle</title>
     <style>
       body {
         display: flex;
@@ -20,13 +20,10 @@
         height: 260px;
         position: relative;
         cursor: none;
-        border: 1px solid #ccc;
-        overflow: hidden;
       }
       .triangle {
         width: 100%;
         height: 100%;
-        background-color: yellow;
       }
       #dot {
         position: absolute;
@@ -93,6 +90,24 @@
           text-anchor="start"
           fill="red"
         ></text>
+        <line
+          id="height-a"
+          x1="0"
+          y1="0"
+          x2="0"
+          y2="0"
+          stroke="#9333ea"
+          stroke-width="0.005"
+          stroke-dasharray="0.01"
+        />
+        <text
+          id="height-a-label"
+          x="0"
+          y="0"
+          font-size="0.04"
+          text-anchor="start"
+          fill="#9333ea"
+        ></text>
       </svg>
       <div id="dot"></div>
     </div>
@@ -107,6 +122,8 @@
       const bottomHeightLabel = document.getElementById('bottom-height-label');
       const heightB = document.getElementById('height-b');
       const heightBLabel = document.getElementById('height-b-label');
+      const heightA = document.getElementById('height-a');
+      const heightALabel = document.getElementById('height-a-label');
 
       function updateHeightLines(x, y) {
         console.log('Updating height lines:', x, y);
@@ -141,9 +158,30 @@
         heightBLabel.setAttribute('y', intersectBy);
         heightBLabel.textContent = heightBLength.toFixed(2);
 
-        console.log('Bottom height line:', bottomHeightLine.outerHTML);
+        // Height to side A (left side)
+        const {
+          intersectAx,
+          intersectAy,
+          length: heightALength,
+        } = calculateHeightA(x, y);
+        heightA.setAttribute('x1', x);
+        heightA.setAttribute('y1', TRIANGLE_HEIGHT - y);
+        heightA.setAttribute('x2', intersectAx);
+        heightA.setAttribute('y2', intersectAy);
 
+        // Update height A label
+        heightALabel.setAttribute('x', intersectAx - 0.1);
+        heightALabel.setAttribute('y', intersectAy);
+        heightALabel.textContent = heightALength.toFixed(2);
+
+        console.log('Bottom height line:', bottomHeightLine.outerHTML);
         console.log('Height B line:', heightB.outerHTML);
+        console.log('Height A line:', heightA.outerHTML);
+        return {
+          bottomHeight,
+          heightBLength,
+          heightALength,
+        };
       }
 
       function updateDotAndCoordinates(x, y) {
@@ -170,11 +208,12 @@
 
         dot.style.left = `${dotX}px`;
         dot.style.top = `${dotY}px`;
-        updateHeightLines(x, y);
+        const { bottomHeight, heightBLength, heightALength } =
+          updateHeightLines(x, y);
 
-        coordinatesDisplay.textContent = `x: ${x.toFixed(2)}, y: ${y.toFixed(
+        coordinatesDisplay.textContent = `${heightALength.toFixed(
           2
-        )}`;
+        )}, ${bottomHeight.toFixed(2)},${heightBLength.toFixed(2)}`;
       }
 
       container.addEventListener('mousemove', (e) => {
@@ -187,7 +226,6 @@
       });
 
       // Test case
-
       updateDotAndCoordinates(0.5, TRIANGLE_HEIGHT);
     </script>
   </body>
