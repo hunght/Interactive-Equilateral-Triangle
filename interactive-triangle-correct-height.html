@@ -20,10 +20,12 @@
         height: 260px;
         position: relative;
         cursor: crosshair;
+        border: 1px solid #ccc;
       }
       .triangle {
         width: 100%;
         height: 100%;
+        background-color: yellow;
       }
       #dot {
         position: absolute;
@@ -76,12 +78,15 @@
       const heightLine = document.getElementById('height-line');
 
       function constrainToTriangle(x, y) {
+        console.log('Before constraint:', x, y);
         if (y > Math.sqrt(3) * (0.5 - Math.abs(x - 0.5))) {
           y = Math.sqrt(3) * (0.5 - Math.abs(x - 0.5));
         }
         if (x < 0) x = 0;
         if (x > 1) x = 1;
         if (y < 0) y = 0;
+        if (y > 0.866) y = 0.866;
+        console.log('After constraint:', x, y);
         return [x, y];
       }
 
@@ -100,14 +105,23 @@
       }
 
       function updateDotAndCoordinates(x, y) {
+        console.log('Input coordinates:', x, y);
         [x, y] = constrainToTriangle(x, y);
+        console.log('Constrained coordinates:', x, y);
 
-        const svgRect = document
-          .getElementById('triangle-svg')
-          .getBoundingClientRect();
-        dot.style.left = `${x * svgRect.width}px`;
-        dot.style.top = `${(1 - y) * svgRect.height}px`;
+        const containerRect = container.getBoundingClientRect();
+        console.log(
+          'Container dimensions:',
+          containerRect.width,
+          containerRect.height
+        );
 
+        const dotX = x * containerRect.width;
+        const dotY = (1 - y) * containerRect.height;
+        console.log('Dot position:', dotX, dotY);
+
+        dot.style.left = `${dotX}px`;
+        dot.style.top = `${dotY}px`;
         updateHeightLine(x, y);
 
         const [a, b, c] = getBarycentricCoordinates(x, y);
@@ -120,6 +134,7 @@
         const rect = container.getBoundingClientRect();
         let x = (e.clientX - rect.left) / rect.width;
         let y = 1 - (e.clientY - rect.top) / rect.height;
+        console.log('Mouse event coordinates:', x, y);
 
         updateDotAndCoordinates(x, y);
       });
