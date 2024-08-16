@@ -95,6 +95,24 @@
         >
           0.866
         </text>
+        <line
+          id="height-b"
+          x1="0"
+          y1="0"
+          x2="0"
+          y2="0"
+          stroke="red"
+          stroke-width="0.005"
+          stroke-dasharray="0.01"
+        />
+        <text
+          id="height-b-label"
+          x="0"
+          y="0"
+          font-size="0.04"
+          text-anchor="start"
+          fill="red"
+        ></text>
       </svg>
       <div id="dot"></div>
     </div>
@@ -108,6 +126,8 @@
       const bottomHeightLabel = document.getElementById('bottom-height-label');
       const leftHeightLine = document.getElementById('left-height-line');
       const leftHeightLabel = document.getElementById('left-height-label');
+      const heightB = document.getElementById('height-b');
+      const heightBLabel = document.getElementById('height-b-label');
 
       // Define the constant for triangle height
       const TRIANGLE_HEIGHT = 0.866;
@@ -160,10 +180,31 @@
         leftHeightLabel.setAttribute('y', TRIANGLE_HEIGHT / 2);
         leftHeightLabel.textContent = TRIANGLE_HEIGHT.toFixed(3);
 
+        // Height to side B (right side)
+        const intersectBx =
+          (y - TRIANGLE_HEIGHT + Math.sqrt(3) * x) / Math.sqrt(3);
+        const intersectBy = TRIANGLE_HEIGHT - Math.sqrt(3) * (intersectBx - 1);
+        heightB.setAttribute('x1', x);
+        heightB.setAttribute('y1', y);
+        heightB.setAttribute('x2', intersectBx);
+        heightB.setAttribute('y2', intersectBy);
+
+        // Calculate the length of height B
+        const heightBLength = Math.sqrt(
+          Math.pow(x - intersectBx, 2) + Math.pow(y - intersectBy, 2)
+        );
+
+        // Update height B label
+        heightBLabel.setAttribute('x', (x + intersectBx) / 2 + 0.01);
+        heightBLabel.setAttribute('y', (y + intersectBy) / 2);
+        heightBLabel.textContent = heightBLength.toFixed(2);
+
         console.log('Bottom height line:', bottomHeightLine.outerHTML);
         console.log('Left height line:', leftHeightLine.outerHTML);
         console.log('Bottom height label:', bottomHeightLabel.outerHTML);
         console.log('Left height label:', leftHeightLabel.outerHTML);
+        console.log('Height B line:', heightB.outerHTML);
+        console.log('Height B label:', heightBLabel.outerHTML);
       }
 
       function updateDotAndCoordinates(x, y) {
