@@ -26,7 +26,10 @@ function calculateHeightB(x, y) {
   const intersectBx = 1 - Math.cos(Math.PI / 3) * oppositeBigTriangle;
   const intersectBy =
     TRIANGLE_HEIGHT - Math.sin(Math.PI / 3) * oppositeBigTriangle;
-  const length = Math.sqrt((intersectBx - x) ** 2 + (intersectBy - y) ** 2);
+  const length = Math.sqrt(
+    (intersectBx - x) ** 2 +
+      (Math.sin(Math.PI / 3) * oppositeBigTriangle - y) ** 2
+  );
 
   return {
     intersectBx,
