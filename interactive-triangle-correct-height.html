@@ -19,7 +19,7 @@
         width: 300px;
         height: 260px;
         position: relative;
-        cursor: crosshair;
+        cursor: none;
         border: 1px solid #ccc;
       }
       .triangle {
@@ -101,7 +101,7 @@
         heightLine.setAttribute('x1', x);
         heightLine.setAttribute('y1', 1 - y);
         heightLine.setAttribute('x2', x);
-        heightLine.setAttribute('y2', 0.866);
+        heightLine.setAttribute('y2', 1);
       }
 
       function updateDotAndCoordinates(x, y) {
@@ -116,14 +116,13 @@
           containerRect.height
         );
 
-        // Calculate the actual triangle height within the container
+        // Calculate the actual triangle height
         const triangleHeight = (containerRect.width * Math.sqrt(3)) / 2;
 
-        // Adjust y-coordinate to match the triangle's height
-        const adjustedY = y * (triangleHeight / containerRect.height);
-
+        // Calculate dot position based on triangle geometry
         const dotX = x * containerRect.width;
-        const dotY = (1 - adjustedY) * containerRect.height;
+        const dotY = containerRect.height - (y / 0.866) * triangleHeight;
+
         console.log('Dot position:', dotX, dotY);
 
         dot.style.left = `${dotX}px`;
@@ -146,8 +145,11 @@
       });
 
       // Test case
-      console.log('Test case: (0.5, 1)');
-      updateDotAndCoordinates(0.5, 1);
+      console.log('Test case: (0.5, 0.866)');
+      updateDotAndCoordinates(0.5, 0.866);
+
+      // Initialize dot at the center of the triangle
+      updateDotAndCoordinates(0.5, 0.433);
     </script>
   </body>
 </html>
