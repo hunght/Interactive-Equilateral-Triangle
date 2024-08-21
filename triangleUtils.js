@@ -65,7 +65,7 @@ function calculateHeightA(x, y) {
   };
 }
 
-module.exports = {
+export {
   TRIANGLE_HEIGHT,
   constrainToTriangle,
   calculateHeightB,
