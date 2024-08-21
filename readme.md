@@ -42,4 +42,4 @@ To run the project locally:
 
 ## Screenshot
 
-![Interactive Equilateral Triangle](https://github.com/user-attachments/assets/028e2b10-18f3-4d1e-b368-df2c38a1780a)
+![Screenshot 2024-08-21 at 20 05 22](https://github.com/user-attachments/assets/b1e0d8ae-50e5-4b02-85a5-b106121a58cf)
